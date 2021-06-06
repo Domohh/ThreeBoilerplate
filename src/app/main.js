@@ -1,8 +1,8 @@
-import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import config from "../data/config";
 
-export default class Sketch {
+export default class Main {
   constructor(options) {
     this.time = 0;
     this.container = options.dom;
@@ -12,12 +12,12 @@ export default class Sketch {
     this.height = this.container.offsetHeight;
 
     this.camera = new THREE.PerspectiveCamera(
-      70,
+      config.camera.pov,
       this.width / this.height,
-      0.01,
-      10
+      config.camera.near,
+      config.camera.far
     );
-    this.camera.position.z = 1;
+    this.camera.position.z = config.camera.posZ;
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(this.width, this.height);
@@ -29,7 +29,6 @@ export default class Sketch {
 
     this.resize();
     this.setupResize();
-    this.setupFullscreen();
     this.addObjects();
     this.render();
   }
@@ -37,19 +36,6 @@ export default class Sketch {
   setupResize() {
     window.addEventListener("resize", this.resize.bind(this));
   }
-
-  setupFullscreen() {
-    window.addEventListener("dblclick", this.fullscreen.bind(this));
-  }
-
-  //   fullscreen() {
-  //     if (!document.fullscreenElement) {
-  //       // TODO: Set Canvas to fullscreen
-  //       // canvas.requestFullscreen();
-  //     } else {
-  //       // document.exitFullscreen();
-  //     }
-  //   }
 
   resize() {
     this.width = this.container.offsetWidth;
@@ -79,7 +65,3 @@ export default class Sketch {
     window.requestAnimationFrame(this.render.bind(this));
   }
 }
-
-Sketch({
-  dom: document.getElementById("container"),
-});
