@@ -25,8 +25,7 @@
     "three": "^0.129.0"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.css": "stylelint --fix"
+    "*.js": "eslint --cache --fix"
   },
   "husky": {
     "hooks": {
