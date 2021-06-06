@@ -3,12 +3,34 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "prettier --check",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "lint-staged": ">=10",
+    "prettier": "^2.3.1",
+    "pretty": "^2.0.0",
+    "pretty-quick": "^3.1.0",
+    "stylelint": "^13.13.1",
     "vite": "^2.3.5"
   },
   "dependencies": {
     "three": "^0.129.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.css": "stylelint --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && pretty-quick --staged"
+    }
   }
 }
