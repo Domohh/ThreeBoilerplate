@@ -16,12 +16,15 @@ export default class Sketch {
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
         this.renderer.setSize( this.width, this.height );
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
         this.container.appendChild( this.renderer.domElement );
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
         this.resize();
         this.setupResize();
+        this.setupFullscreen();
         this.addObjects();
         this.render();
     }
@@ -30,12 +33,28 @@ export default class Sketch {
         window.addEventListener('resize', this.resize.bind(this));
     }
 
+    setupFullscreen() {
+        window.addEventListener('dblclick', this.fullscreen.bind(this));
+    };
+
+    fullscreen() {
+        if (!document.fullscreenElement) {
+            // TODO: Set Canvas to fullscreen
+            // canvas.requestFullscreen();
+        } else {
+            // document.exitFullscreen();
+        }
+    };
+
     resize() {
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
-        this.renderer.setSize( this.width, this.height );
+
         this.camera.aspect = this.width / this.height;
         this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize( this.width, this.height );
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
 
     addObjects() {
